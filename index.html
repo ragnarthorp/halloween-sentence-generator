@@ -3,142 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iceland Adventure</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            padding: 20px;
-        }
-        #game-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: auto;
-        }
-        button {
-            cursor: pointer;
-            font-size: 16px;
-            padding: 10px;
-            margin: 5px;
-        }
-    </style>
+    <title>Halloween Sentence Creator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="game-container">
-        <h1>Welcome to Iceland Adventure</h1>
-        <p id="description">Your journey begins near the erupting Hekla...</p>
-        <div id="question-container"></div>
-        <button id="start-btn" onclick="meetBishop()">Start</button>
-        <p id="points" style="display:none;">Points: 0</p>
+    <div class="container">
+        <h2>Create a Halloween Sentence:</h2>
+
+        <label for="animal">Choose an Animal:</label>
+        <select id="animal">
+            <option value="spider">spider</option>
+            <option value="bat">bat</option>
+            <option value="witch">witch</option>
+            <option value="ghost">ghost</option>
+            <option value="zombie">zombie</option>
+            <option value="vampire">vampire</option>
+            <option value="werewolf">werewolf</option>
+            <option value="skeleton">skeleton</option>
+            <option value="ghoul">ghoul</option>
+            <option value="mummy">mummy</option>
+            <option value="black cat">black cat</option>
+            <option value="grim reaper">grim reaper</option>
+            <option value="poltergeist">poltergeist</option>
+            <option value="banshee">banshee</option>
+            <option value="demon">demon</option>
+        </select>
+
+        <label for="adjective">Choose an Adjective:</label>
+        <select id="adjective">
+            <option value="creepy">creepy</option>
+            <option value="spooky">spooky</option>
+            <option value="terrifying">terrifying</option>
+            <option value="ghastly">ghastly</option>
+            <option value="gruesome">gruesome</option>
+            <option value="frightening">frightening</option>
+            <option value="eerie">eerie</option>
+            <option value="dreadful">dreadful</option>
+            <option value="hair-raising">hair-raising</option>
+            <option value="chilling">chilling</option>
+            <option value="macabre">macabre</option>
+            <option value="unnerving">unnerving</option>
+            <option value="startling">startling</option>
+            <option value="sinister">sinister</option>
+            <option value="mysterious">mysterious</option>
+        </select>
+
+        <label for="action">Choose an Action:</label>
+        <select id="action">
+            <option value="crawled">crawled</option>
+            <option value="flew">flew</option>
+            <option value="lurked">lurked</option>
+            <option value="haunted">haunted</option>
+            <option value="screamed">screamed</option>
+            <option value="howled">howled</option>
+            <option value="stalked">stalked</option>
+            <option value="terrified">terrified</option>
+            <option value="bewitched">bewitched</option>
+            <option value="danced">danced</option>
+            <option value="vanished">vanished</option>
+            <option value="scared">scared</option>
+            <option value="hissed">hissed</option>
+            <option value="spooked">spooked</option>
+            <option value="enchanted">enchanted</option>
+        </select>
+
+        <button onclick="generateSentence()">Generate Sentence</button>
+
+        <p id="output">Your sentence will appear here.</p>
     </div>
-    <script>
-        var points = 0;
 
-        function updatePoints(value) {
-            points += value;
-            document.getElementById('points').innerHTML = 'Points: ' + points;
-            document.getElementById('points').style.display = 'block';
-        }
-
-        function meetBishop() {
-            var description = document.getElementById('description');
-            var questionContainer = document.getElementById('question-container');
-            var startBtn = document.getElementById('start-btn');
-
-            description.innerHTML = 'You meet Bishop Oddur Einarsson, a gentle soul with a worried expression... ' +
-            'He welcomes you to Skálholt and shares his turmoil about a lost manuscript. ' +
-            'He asks if you\'d be willing to assist in locating it.';
-            startBtn.style.display = 'none';
-
-            var yesBtn = document.createElement('button');
-            yesBtn.innerHTML = 'Yes';
-            yesBtn.onclick = function() { searchManuscript(); };
-
-            var noBtn = document.createElement('button');
-            noBtn.innerHTML = 'No';
-            noBtn.onclick = function() { refuseHelp(); };
-
-            questionContainer.appendChild(yesBtn);
-            questionContainer.appendChild(noBtn);
-        }
-
-        function searchManuscript() {
-            var description = document.getElementById('description');
-            var questionContainer = document.getElementById('question-container');
-            
-            description.innerHTML = 'You decide to help the bishop. Where do you want to search?';
-            questionContainer.innerHTML = '';  // Clear previous buttons
-
-            var locations = ['Cathedral', 'Priest\'s Home', 'Property'];
-            locations.forEach(function(location) {
-                var btn = document.createElement('button');
-                btn.innerHTML = location;
-                btn.onclick = function() { handleSearch(location); };
-                questionContainer.appendChild(btn);
-            });
-        }
-
-        function refuseHelp() {
-            var description = document.getElementById('description');
-            description.innerHTML = 'You decided not to help the bishop. You can stay the night, but then must leave.';
-            // Add more logic here for the next steps
-        }
-
-        function handleSearch(location) {
-            var description = document.getElementById('description');
-            var questionContainer = document.getElementById('question-container');
-            questionContainer.innerHTML = '';
-
-            if (location === 'Cathedral') {
-                description.innerHTML = 'You found the manuscript in the basement, hidden behind an old, dusty tapestry!';
-                var stealBtn = document.createElement('button');
-                stealBtn.innerHTML = 'Steal it';
-                stealBtn.onclick = function() { 
-                    description.innerHTML = 'You decided to keep the manuscript and must leave Skálholt immediately.';
-                };
-                var returnBtn = document.createElement('button');
-                returnBtn.innerHTML = 'Return it';
-                returnBtn.onclick = function() { 
-                    description.innerHTML = 'The bishop is grateful and grants you a horse for your travels.';
-                    updatePoints(10);
-                };
-                questionContainer.appendChild(stealBtn);
-                questionContainer.appendChild(returnBtn);
-            } 
-            else if (location === 'Priest\'s Home') {
-                description.innerHTML = 'You find a strange picture of a man with spread arms and legs inside a square and a circle.';
-                var stealBtn = document.createElement('button');
-                stealBtn.innerHTML = 'Steal it';
-                stealBtn.onclick = function() { 
-                    description.innerHTML = 'You were caught stealing and have to leave Skálholt immediately.';
-                };
-                var searchBtn = document.createElement('button');
-                searchBtn.innerHTML = 'Search elsewhere';
-                searchBtn.onclick = function() { 
-                    searchManuscript();
-                };
-                questionContainer.appendChild(stealBtn);
-                questionContainer.appendChild(searchBtn);
-            } 
-            else if (location === 'Property') {
-                description.innerHTML = 'A gang of thieves steals one of your horses.';
-                var followBtn = document.createElement('button');
-                followBtn.innerHTML = 'Follow them';
-                followBtn.onclick = function() { 
-                    description.innerHTML = 'You follow the thieves...'; 
-                    // Add more logic here for following the thieves.
-                };
-                var searchBtn = document.createElement('button');
-                searchBtn.innerHTML = 'Keep searching';
-                searchBtn.onclick = function() { 
-                    searchManuscript();
-                };
-                questionContainer.appendChild(followBtn);
-                questionContainer.appendChild(searchBtn);
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
